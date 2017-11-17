@@ -1,0 +1,21 @@
+version: '2' # specify docker-compose version
+
+# Define the services/containers to be run
+services:
+  angular: # name of the first service
+    build: angular4-frontend # specify the directory of the Dockerfile
+    ports:
+      - "4200:4200" # specify port forewarding
+
+  spring-boot: #name of the second service
+    build: spring-boot-backend/target/docker/ # specify the directory of the Dockerfile
+    ports:
+      - "8080:8080" #specify ports forewarding
+    depends_on:
+      - database # link this service to the database service
+
+  database: # name of the third service
+    image: mongo # specify image to build container from
+    ports:
+      - "27017:27017" #specify port forewarding
+
